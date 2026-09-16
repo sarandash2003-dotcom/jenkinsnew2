@@ -16,7 +16,7 @@ pipeline {
         IMAGE_TAG      = "${BUILD_NUMBER}"
 
         SONARQUBE      = 'sonarqube'
-        SONAR_SCANNER  = 'sonar-scanner'
+        SONAR_SCANNER  = 'SonarScanner'
     }
 
     stages {
