@@ -6,7 +6,7 @@ pipeline {
         disableConcurrentBuilds()
     }
 
-environment {
+  environment {
     AWS_REGION     = 'ap-northeast-1'
     AWS_ACCOUNT_ID = '699588736418'
 
@@ -17,9 +17,6 @@ environment {
 
     SONARQUBE      = 'sonarqube'
     SONAR_SCANNER  = 'SonarScanner'
-
-    SONAR_PROJECT_KEY  = 'seclock'
-    SONAR_PROJECT_NAME = 'SECLOCK'
 }
     stages {
 
@@ -86,21 +83,21 @@ environment {
         /*
          * 4. SONARQUBE ANALYSIS
          */
-      stage('SonarQube Analysis') {
+   stage('SonarQube Analysis') {
     steps {
         echo 'Running SonarQube analysis...'
 
-        withSonarQubeEnv("${SONARQUBE}") {
+        withSonarQubeEnv('sonarqube') {
             script {
-                def scannerHome = tool "${SonarScanner}"
+                def scannerHome = tool 'SonarScanner'
 
                 sh """
                     ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                        -Dsonar.projectName=${SONAR_PROJECT_NAME} \
+                        -Dsonar.projectKey=seclock \
+                        -Dsonar.projectName=SECLOCK \
                         -Dsonar.sources=. \
                         -Dsonar.python.version=3.14 \
-                        -Dsonar.exclusions="venv/**,.venv/**,__pycache__/**,sample_certificates/**"
+                        -Dsonar.exclusions=venv/**,.venv/**,__pycache__/**,sample_certificates/**
                 """
             }
         }
