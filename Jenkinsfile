@@ -134,8 +134,8 @@ pipeline {
                 withCredentials([
                     usernamePassword(
                         credentialsId: 'aws-ecr-credentials',
-                        usernameVariable: 'AWS_ACCESS_KEY_ID',
-                        passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+                        usernameVariable: '699588736418',
+                        passwordVariable: 'x4hoo3TgOV8eLZ2IroIXmYygLVGVV/R13D00pjBV'
                     )
                 ]) {
                     sh '''
