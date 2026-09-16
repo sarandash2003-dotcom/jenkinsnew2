@@ -6,19 +6,21 @@ pipeline {
         disableConcurrentBuilds()
     }
 
-    environment {
-        AWS_REGION     = 'ap-northeast-1'
-        AWS_ACCOUNT_ID = '699588736418'
+environment {
+    AWS_REGION     = 'ap-northeast-1'
+    AWS_ACCOUNT_ID = '699588736418'
 
-        ECR_REPOSITORY = 'seclock'
-        ECR_REGISTRY   = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-        IMAGE_NAME     = "${ECR_REGISTRY}/${ECR_REPOSITORY}"
-        IMAGE_TAG      = "${BUILD_NUMBER}"
+    ECR_REPOSITORY = 'seclock'
+    ECR_REGISTRY   = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+    IMAGE_NAME     = "${ECR_REGISTRY}/${ECR_REPOSITORY}"
+    IMAGE_TAG      = "${BUILD_NUMBER}"
 
-        SONARQUBE      = 'sonarqube'
-        SONAR_SCANNER  = 'SonarScanner'
-    }
+    SONARQUBE      = 'sonarqube'
+    SONAR_SCANNER  = 'SonarScanner'
 
+    SONAR_PROJECT_KEY  = 'seclock'
+    SONAR_PROJECT_NAME = 'SECLOCK'
+}
     stages {
 
         /*
@@ -84,25 +86,26 @@ pipeline {
         /*
          * 4. SONARQUBE ANALYSIS
          */
-       stage('SonarQube Analysis') {
+      stage('SonarQube Analysis') {
     steps {
-        withSonarQubeEnv('sonarqube') {
+        echo 'Running SonarQube analysis...'
+
+        withSonarQubeEnv("${SONARQUBE}") {
             script {
-                def scannerHome = tool 'SonarScanner'
+                def scannerHome = tool "${SonarScanner}"
 
                 sh """
-                    ${scannerHome}/bin/SonarScanner \
+                    ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                        -Dsonar.projectName=${APP_NAME} \
+                        -Dsonar.projectName=${SONAR_PROJECT_NAME} \
                         -Dsonar.sources=. \
                         -Dsonar.python.version=3.14 \
-                        -Dsonar.exclusions="venv/**,__pycache__/**,sample_certificates/**"
+                        -Dsonar.exclusions="venv/**,.venv/**,__pycache__/**,sample_certificates/**"
                 """
             }
         }
     }
 }
-
         /*
          * 5. BUILD DOCKER IMAGE
          */
