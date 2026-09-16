@@ -7,15 +7,15 @@ pipeline {
     }
 
     environment {
-        AWS_REGION     = 'ap-south-1'
-        AWS_ACCOUNT_ID = '658469473117'
+        AWS_REGION     = 'ap-northeast-1'
+        AWS_ACCOUNT_ID = '699588736418'
 
         ECR_REPOSITORY = 'seclock'
         ECR_REGISTRY   = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
         IMAGE_NAME     = "${ECR_REGISTRY}/${ECR_REPOSITORY}"
         IMAGE_TAG      = "${BUILD_NUMBER}"
 
-        SONARQUBE      = 'SonarQube'
+        SONARQUBE      = 'sonarqube'
         SONAR_SCANNER  = 'sonar-scanner'
     }
 
@@ -89,7 +89,7 @@ pipeline {
                 script {
                     echo 'Running SonarQube analysis...'
 
-                    def scannerHome = tool "${SONAR_SCANNER}"
+                    def scannerHome = tool "${sonarscanner}"
 
                     withSonarQubeEnv("${SONARQUBE}") {
                         sh """
