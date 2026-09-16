@@ -91,7 +91,7 @@ pipeline {
                 def scannerHome = tool 'SonarScanner'
 
                 sh """
-                    ${scannerHome}/bin/sonar-scanner \
+                    ${scannerHome}/bin/SonarScanner \
                         -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
                         -Dsonar.projectName=${APP_NAME} \
                         -Dsonar.sources=. \
