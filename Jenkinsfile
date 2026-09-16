@@ -93,11 +93,11 @@ pipeline {
 
                 sh """
                     ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=seclock \
-                        -Dsonar.projectName=SECLOCK \
-                        -Dsonar.sources=. \
-                        -Dsonar.python.version=3.14 \
-                        -Dsonar.exclusions="venv/**,.venv/**,__pycache__/**,sample_certificates/**"
+                    -Dsonar.projectKey=seclock \
+                    -Dsonar.projectName=SECLOCK \
+                    -Dsonar.sources=. \
+                    -Dsonar.python.version=3.14 \
+                    -Dsonar.exclusions=venv/**,.venv/**,__pycache__/**,sample_certificates/**
                 """
             }
         }
