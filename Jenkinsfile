@@ -89,7 +89,7 @@ pipeline {
                 script {
                     echo 'Running SonarQube analysis...'
 
-                    def scannerHome = tool "${sonarscanner}"
+                    def scannerHome = tool "${SonarScanner}"
 
                     withSonarQubeEnv("${SONARQUBE}") {
                         sh """
