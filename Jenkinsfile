@@ -83,7 +83,7 @@ pipeline {
         /*
          * 4. SONARQUBE ANALYSIS
          */
-   stage('SonarQube Analysis') {
+  stage('SonarQube Analysis') {
     steps {
         echo 'Running SonarQube analysis...'
 
@@ -97,7 +97,7 @@ pipeline {
                         -Dsonar.projectName=SECLOCK \
                         -Dsonar.sources=. \
                         -Dsonar.python.version=3.14 \
-                        -Dsonar.exclusions=venv/**,.venv/**,__pycache__/**,sample_certificates/**
+                        -Dsonar.exclusions="venv/**,.venv/**,__pycache__/**,sample_certificates/**"
                 """
             }
         }
